@@ -2,10 +2,15 @@
 
 // Determine API base URL based on environment
 const getApiBaseUrl = (): string => {
-  // In production, use the deployed backend URL
+  // Check if we have a NEXT_PUBLIC_API_BASE_URL environment variable
+  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_BASE_URL) {
+    return process.env.NEXT_PUBLIC_API_BASE_URL;
+  }
+  
+  // In production, fallback to a default but this should be set via env var
   if (process.env.NODE_ENV === 'production') {
-    // Replace with your actual deployed backend URL
-    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://your-deployed-backend-url.com/api';
+    // This should be overridden by the environment variable
+    return 'https://matchmaking-d08t.onrender.com/api';
   }
   
   // In development, use localhost
