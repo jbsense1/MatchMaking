@@ -106,7 +106,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
 2. Connect your repository to Vercel
 3. Configure the following environment variable in Vercel:
    ```
-   NEXT_PUBLIC_API_BASE_URL=https://your-deployed-backend-url.com/api
+   NEXT_PUBLIC_API_BASE_URL=https://your-railway-app-url.up.railway.app/api
    ```
 4. Set the build command to: `npm run build`
 5. Set the output directory to: `.next`
@@ -116,7 +116,8 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
 1. Create an account at [Railway.app](https://railway.app/)
 2. Create a new project
 3. Connect your GitHub repository
-4. Configure the following environment variables:
+4. Railway will automatically detect it's a Node.js project
+5. Configure the following environment variables in Railway:
    ```
    JWT_SECRET=your-super-secret-jwt-key
    JWT_EXPIRES_IN=24h
@@ -124,9 +125,20 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
    NODE_ENV=production
    FRONTEND_URL=https://your-vercel-app.vercel.app
    ```
-5. Set the build command to: `npm run build`
-6. Set the start command to: `npm start`
-7. Deploy the application
+6. Railway will automatically use the build command: `npm install`
+7. Railway will automatically use the start command: `npm start`
+8. Deploy the application
+9. Once deployed, get your Railway app URL (something like `https://your-app-name.up.railway.app`)
+
+### Updating Frontend After Backend Deployment
+
+After deploying your backend to Railway:
+
+1. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable in your Vercel project settings:
+   ```
+   NEXT_PUBLIC_API_BASE_URL=https://your-railway-app-url.up.railway.app/api
+   ```
+2. Redeploy your frontend application
 
 ### Alternative Backend Deployment Options
 
@@ -134,6 +146,7 @@ You can also deploy the backend to:
 - **Render.com**: Similar setup process as Railway
 - **Heroku**: Use the Heroku CLI or GitHub integration
 - **DigitalOcean App Platform**: Create an app and connect your repository
+- **Any cloud provider that supports Node.js applications**
 
 ## API Endpoints
 
@@ -175,8 +188,8 @@ The backend is built with Express.js and follows a controller-service pattern:
 
 ## Troubleshooting
 
-### "Failed to find a match" on mobile devices
-This issue occurs when accessing the deployed frontend from a mobile device while the backend is still running locally. To fix this:
+### "Failed to find a match" on mobile devices or other networks
+This issue occurs when accessing the deployed frontend from a device while the backend is still running locally. To fix this:
 
 1. Deploy your backend to a cloud service (Railway, Render, etc.)
 2. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable in Vercel to point to your deployed backend
