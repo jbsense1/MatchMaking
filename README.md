@@ -100,18 +100,42 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
 
 ## Deployment Instructions
 
-### Frontend Deployment (Vercel)
+### Option 1: Deploy to Render (Recommended - Single Platform)
+
+Render allows you to deploy both frontend and backend services in one project.
+
+1. **Sign up for Render** at [render.com](https://render.com/)
+2. **Create a new Web Service**
+3. **Connect your GitHub repository**
+4. **Configure the service**:
+   - **Name**: Choose a name for your service
+   - **Environment**: Node
+   - **Build Command**: `npm run render:build`
+   - **Start Command**: `npm start`
+   - **Instance Type**: Free (for testing)
+5. **Add environment variables**:
+   ```
+   JWT_SECRET=your-super-secret-jwt-key
+   JWT_EXPIRES_IN=24h
+   PORT=3001
+   NODE_ENV=production
+   FRONTEND_URL=https://your-frontend-service.onrender.com
+   NEXT_PUBLIC_API_BASE_URL=https://your-backend-service.onrender.com/api
+   ```
+6. **Deploy the service**
+
+### Option 2: Frontend Deployment (Vercel)
 
 1. Push your code to a GitHub repository
 2. Connect your repository to Vercel
 3. Configure the following environment variable in Vercel:
    ```
-   NEXT_PUBLIC_API_BASE_URL=https://your-railway-app-url.up.railway.app/api
+   NEXT_PUBLIC_API_BASE_URL=https://your-backend-service.onrender.com/api
    ```
 4. Set the build command to: `npm run build`
 5. Set the output directory to: `.next`
 
-### Backend Deployment (Railway.app - Recommended)
+### Option 3: Backend Deployment (Railway.app)
 
 1. Create an account at [Railway.app](https://railway.app/)
 2. Create a new project
@@ -132,18 +156,17 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
 
 ### Updating Frontend After Backend Deployment
 
-After deploying your backend to Railway:
+After deploying your backend:
 
-1. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable in your Vercel project settings:
+1. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable in your frontend deployment settings:
    ```
-   NEXT_PUBLIC_API_BASE_URL=https://your-railway-app-url.up.railway.app/api
+   NEXT_PUBLIC_API_BASE_URL=https://your-backend-service-url/api
    ```
 2. Redeploy your frontend application
 
 ### Alternative Backend Deployment Options
 
 You can also deploy the backend to:
-- **Render.com**: Similar setup process as Railway
 - **Heroku**: Use the Heroku CLI or GitHub integration
 - **DigitalOcean App Platform**: Create an app and connect your repository
 - **Any cloud provider that supports Node.js applications**
@@ -191,8 +214,8 @@ The backend is built with Express.js and follows a controller-service pattern:
 ### "Failed to find a match" on mobile devices or other networks
 This issue occurs when accessing the deployed frontend from a device while the backend is still running locally. To fix this:
 
-1. Deploy your backend to a cloud service (Railway, Render, etc.)
-2. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable in Vercel to point to your deployed backend
+1. Deploy your backend to a cloud service (Render, Railway, etc.)
+2. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable to point to your deployed backend
 3. Redeploy your frontend application
 
 ### CORS Issues

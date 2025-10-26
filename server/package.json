@@ -2,7 +2,7 @@
   "name": "fifa-match-server",
   "version": "1.0.0",
   "description": "Backend for FIFA 23 team matching system",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
     "start": "node dist/server.js",
