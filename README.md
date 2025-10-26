@@ -77,7 +77,14 @@ NODE_ENV=development
 FRONTEND_URL="http://localhost:3000"
 ```
 
-### Running the Application
+Create a `.env.local` file in the `client/` directory with:
+
+```env
+# Development API URL
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
+```
+
+### Running the Application Locally
 
 1. Start the development servers:
    ```bash
@@ -90,6 +97,43 @@ FRONTEND_URL="http://localhost:3000"
 2. Access the application:
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:3001
+
+## Deployment Instructions
+
+### Frontend Deployment (Vercel)
+
+1. Push your code to a GitHub repository
+2. Connect your repository to Vercel
+3. Configure the following environment variable in Vercel:
+   ```
+   NEXT_PUBLIC_API_BASE_URL=https://your-deployed-backend-url.com/api
+   ```
+4. Set the build command to: `npm run build`
+5. Set the output directory to: `.next`
+
+### Backend Deployment (Railway.app - Recommended)
+
+1. Create an account at [Railway.app](https://railway.app/)
+2. Create a new project
+3. Connect your GitHub repository
+4. Configure the following environment variables:
+   ```
+   JWT_SECRET=your-super-secret-jwt-key
+   JWT_EXPIRES_IN=24h
+   PORT=3001
+   NODE_ENV=production
+   FRONTEND_URL=https://your-vercel-app.vercel.app
+   ```
+5. Set the build command to: `npm run build`
+6. Set the start command to: `npm start`
+7. Deploy the application
+
+### Alternative Backend Deployment Options
+
+You can also deploy the backend to:
+- **Render.com**: Similar setup process as Railway
+- **Heroku**: Use the Heroku CLI or GitHub integration
+- **DigitalOcean App Platform**: Create an app and connect your repository
 
 ## API Endpoints
 
@@ -129,19 +173,19 @@ The backend is built with Express.js and follows a controller-service pattern:
 - Services contain business logic
 - Data is stored in-memory (no database required)
 
-## Deployment
+## Troubleshooting
 
-### Frontend
-Deploy the frontend to Vercel for automatic deployments with GitHub integration.
+### "Failed to find a match" on mobile devices
+This issue occurs when accessing the deployed frontend from a mobile device while the backend is still running locally. To fix this:
 
-### Backend
-Deploy the backend to platforms like:
-- Railway
-- Render
-- Heroku
-- DigitalOcean App Platform
+1. Deploy your backend to a cloud service (Railway, Render, etc.)
+2. Update the `NEXT_PUBLIC_API_BASE_URL` environment variable in Vercel to point to your deployed backend
+3. Redeploy your frontend application
 
-Ensure environment variables are set in the deployment platform.
+### CORS Issues
+If you encounter CORS errors, ensure that:
+1. The `FRONTEND_URL` environment variable in your backend matches your frontend URL
+2. You're using the correct protocol (http vs https)
 
 ## Contributing
 1. Fork the repository

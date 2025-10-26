@@ -1,6 +1,18 @@
 // API service for communicating with the backend
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api';
+// Determine API base URL based on environment
+const getApiBaseUrl = (): string => {
+  // In production, use the deployed backend URL
+  if (process.env.NODE_ENV === 'production') {
+    // Replace with your actual deployed backend URL
+    return process.env.NEXT_PUBLIC_API_BASE_URL || 'https://your-deployed-backend-url.com/api';
+  }
+  
+  // In development, use localhost
+  return process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 export interface Player {
   id: number;
